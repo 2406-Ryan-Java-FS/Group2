@@ -1,0 +1,50 @@
+Members: Eric, Teddy, Fidel, Chase
+
+Auction House Application
+	User Table
+		User Id field (Primary Key)
+		Firstname field
+		Lastname field
+		Username field
+		Password field
+		Balance field
+		Roles field (Admin/Client)
+		
+	Item Table
+		Item Id field
+		Owner field (foreign key references user id in user table)
+		Name field
+		Sold field (Boolean field)
+		
+	Auctions Table
+		Auction id field
+		Item Id field (foreign key references item id in item table)
+		Current Price field (Highest Bid) 
+		Highest Bidder id field (foreign key referenes user id in user table)
+		Status field (String - Listed/Unlisted/Sold)
+		Time field
+		
+	Comments Table
+		Comment Id field 
+		Commenter Id field (foreign key references user id in user table)
+		Auction Id field (foreign key references the auction id in the auction table)
+		String field
+		
+		
+---- User Stories ----		
+1. Users can register and login to their accounts.
+	- Admins can add a starting balance.
+	- Users cannot edit their balance.
+2. Users can list items.
+3. Users can bid for items on the auction table.
+4. Admins can approve items for auction.
+5. Users and Admins can comment on auction items.
+6. Users can get a list of items available for auctions.
+7. Admins can get a list of users.
+8. Users can get a list of items that they own.
+9. Admins can set and change the time for an Auction.
+10. Admins can close down an auction.
+11. User balance increases/decreases based on successful bids.
+12. Users can see sold and active items listed for Auctions.
+	- Unlisted auction items should only be visible to Admins.
+13. Admins should be able to delete comments.
