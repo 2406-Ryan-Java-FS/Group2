@@ -22,7 +22,7 @@ CREATE TABLE items(
 
 CREATE TABLE auctions(
 	a_id serial PRIMARY KEY,
-	item_id int REFERENCES items(i_id) ON DELETE SET NULL,
+	auction_item_id int REFERENCES items(i_id) ON DELETE SET NULL,
 	bid decimal(10, 2),
 	bidder_id int REFERENCES users(u_id) ON DELETE SET NULL,
 	status varchar(50) DEFAULT 'Inactive',
