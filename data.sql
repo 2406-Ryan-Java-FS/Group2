@@ -25,7 +25,7 @@ CREATE TABLE auctions(
 	item_id int REFERENCES items(i_id),
 	bid decimal(10, 2),
 	bidder_id int REFERENCES users(u_id),
-	status varchar(50) DEFAULT "Inactive",
+	status varchar(50) DEFAULT 'Inactive',
 	a_time int
 );
 
