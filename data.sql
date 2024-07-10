@@ -10,7 +10,7 @@ CREATE TABLE users(
 	username varchar(50) UNIQUE,
 	password varchar(50),
 	balance decimal(10, 2),
-	u_role varchar(50)
+	u_role varchar(50) DEFAULT 'Client'
 );
 
 CREATE TABLE items(
