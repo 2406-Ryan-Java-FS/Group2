@@ -1,4 +1,4 @@
-package com.revature.models;
+package com.revature.auctionator.models;
 
 import jakarta.persistence.*;
 
