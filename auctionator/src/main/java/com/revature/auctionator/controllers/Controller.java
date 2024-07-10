@@ -11,12 +11,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class Controller {
 
     UserService us;
 
     @Autowired
-    public UserController(UserService us) {
+    public Controller(UserService us) {
         this.us = us;
     }
 
