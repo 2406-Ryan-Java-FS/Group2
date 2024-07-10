@@ -1,6 +1,4 @@
 package com.revature.auctionator.services;
 
-public interface AuctionServiceImpl {
-
-    
+public class AuctionServiceImpl implements AuctionService {
 }
