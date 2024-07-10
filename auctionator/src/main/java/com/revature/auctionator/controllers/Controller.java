@@ -10,22 +10,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
 public class Controller {
 
     UserService us;
+    // Other services will be added once implemented.
 
     @Autowired
     public Controller(UserService us) {
         this.us = us;
     }
 
-    @GetMapping
+    @GetMapping("/users")
     public List<User> getAllUsers() {
         return us.getAllUsers();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public User getUser(@PathVariable int id) {
         return us.getUser(id);
     }
@@ -36,7 +36,7 @@ public class Controller {
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/users/{id}")
     public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User u) {
         u.setId(id);
         User u2 = us.getUser(id);
@@ -48,7 +48,7 @@ public class Controller {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/users/{id}")
     public ResponseEntity<Boolean> deleteUser(@PathVariable int id) {
         boolean wasDeleted = us.deleteUser(id);
         return new ResponseEntity<>(wasDeleted ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND);
