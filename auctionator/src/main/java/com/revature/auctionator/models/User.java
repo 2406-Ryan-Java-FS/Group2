@@ -14,6 +14,7 @@ public class User {
     @Column(name = "u_id", updatable = false)
     private int id;
 
+<<<<<<< HEAD
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
@@ -126,4 +127,7 @@ public class User {
                 ", role='" + role + '\'' +
                 '}';
     }
+=======
+
+>>>>>>> 15e8bea6d4ff64e55ca275344750006a63df0622
 }
