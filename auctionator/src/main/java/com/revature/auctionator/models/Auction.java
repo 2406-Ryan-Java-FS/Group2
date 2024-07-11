@@ -11,12 +11,12 @@ public class Auction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "a_id", updatable = false)
-    private int a_id;
+    private int id;
 
-    @Column(name = "item_id")
+    @Column(name = "auction_item_id")
     private int item_id;
 
-    @Column(name = "bid", nullable = false, columnDefinition = "NUMERIC (10,2)")
+    @Column(name = "bid", columnDefinition = "NUMERIC (10,2)")
     private double bid;
 
     @Column(name = "bidder_id")
@@ -32,7 +32,7 @@ public class Auction {
     }
 
     public Auction(int a_id, int item_id, double bid, int bidder_id, String status, int a_time) {
-        this.a_id = a_id;
+        this.id = a_id;
         this.item_id = item_id;
         this.bid = bid;
         this.bidder_id = bidder_id;
@@ -40,7 +40,12 @@ public class Auction {
         this.a_time = a_time;
     }
 
-    public int getA_id() { return a_id; }
+    public Auction(double bid, int bidder_id) {
+        this.bid = bid;
+        this.bidder_id = bidder_id;
+    }
+
+    public int getId() { return id; }
 
     public int getItem_id() { return item_id; }
 
@@ -52,7 +57,7 @@ public class Auction {
 
     public int getA_time() { return a_time; }
 
-    public void setA_id(int a_id) { this.a_id = a_id; }
+    public void setA_id(int a_id) { this.id = a_id; }
 
     public void setItem_id(int item_id) { this.item_id = item_id; }
 
@@ -69,18 +74,18 @@ public class Auction {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Auction auction = (Auction) o;
-        return getA_id() == auction.getA_id() && getItem_id() == auction.getItem_id() && Double.compare(getBid(), auction.getBid()) == 0 && getBidder_id() == auction.getBidder_id() && getA_time() == auction.getA_time() && Objects.equals(getStatus(), auction.getStatus());
+        return getId() == auction.getId() && getItem_id() == auction.getItem_id() && Double.compare(getBid(), auction.getBid()) == 0 && getBidder_id() == auction.getBidder_id() && getA_time() == auction.getA_time() && Objects.equals(getStatus(), auction.getStatus());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getA_id(), getItem_id(), getBid(), getBidder_id(), getStatus(), getA_time());
+        return Objects.hash(getId(), getItem_id(), getBid(), getBidder_id(), getStatus(), getA_time());
     }
 
     @Override
     public String toString() {
         return "Auction{" +
-                "a_id=" + a_id +
+                "a_id=" + id +
                 ", item_id=" + item_id +
                 ", bid=" + bid +
                 ", bidder_id=" + bidder_id +
