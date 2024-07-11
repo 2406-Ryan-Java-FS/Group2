@@ -1,7 +1,13 @@
 package com.revature.auctionator.models;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
+
+/**
+ * Comment Entity Class
+ */
 
 @Entity
 @Table(name = "comments")
