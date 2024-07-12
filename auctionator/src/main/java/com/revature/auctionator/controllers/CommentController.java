@@ -80,6 +80,18 @@ public class CommentController {
     }
 
     /**
+     * GET request handler to return a list of comments made by a user on an auction
+     * returns an empty list if no comments have either the specified commenterId or auctionId
+     * @param commenterId
+     * @param auctionId
+     * @return
+     */
+    @GetMapping("/comments/users/{commenterId}/auctions/{auctionId}")
+    public ResponseEntity<List<Comment>> getAllCommentsFromAUserForAnAuction(@PathVariable("commenterId") int commenterId, @PathVariable("auctionId") int auctionId){
+        return ResponseEntity.ok(cs.getAllCommentsFromAUserForAnAuction(commenterId, auctionId));
+    }
+
+    /**
      * PATCH request handler to return an Integer of the number of rows updated in the table after updating
      * the comment field of the Comment object
      * @param id
