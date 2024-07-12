@@ -13,10 +13,10 @@ public class Auction {
     @Column(name = "a_id", updatable = false)
     private int a_id;
 
-    @Column(name = "auction_item_id")
+    @Column(name = "item_id")
     private int item_id;
 
-    @Column(name = "bid", nullable = false, columnDefinition = "NUMERIC(10,2)")
+    @Column(name = "bid", nullable = false, columnDefinition = "NUMERIC (10,2)")
     private double bid;
 
     @Column(name = "bidder_id")
