@@ -2,7 +2,6 @@ package com.revature.auctionator.controllers;
 
 import com.revature.auctionator.models.User;
 import com.revature.auctionator.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +14,6 @@ public class Controller {
     UserService us;
     // Other services will be added once implemented.
 
-    @Autowired
     public Controller(UserService us) {
         this.us = us;
     }

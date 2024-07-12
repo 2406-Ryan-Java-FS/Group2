@@ -25,7 +25,6 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(name="balance", columnDefinition = "NUMERIC(10,2)")
     private double balance;
 
     @Column(name = "u_role")
