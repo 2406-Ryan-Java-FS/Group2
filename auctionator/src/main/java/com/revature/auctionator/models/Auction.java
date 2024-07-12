@@ -16,7 +16,7 @@ public class Auction {
     @Column(name = "auction_item_id")
     private int item_id;
 
-    @Column(name = "bid", nullable = false)
+    @Column(name = "bid", nullable = false, columnDefinition = "NUMERIC(10,2)")
     private double bid;
 
     @Column(name = "bidder_id")
