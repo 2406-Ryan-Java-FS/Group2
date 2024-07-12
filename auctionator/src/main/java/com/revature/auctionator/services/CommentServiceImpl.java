@@ -76,6 +76,17 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
+     * returns a list of all comments made by a specific user for a specific auction
+     * @param commenterId
+     * @param auctionId
+     * @return
+     */
+    @Override
+    public List<Comment> getAllCommentsFromAUserForAnAuction(int commenterId, int auctionId){
+        return cr.findByCommenterIdAndAuctionId(commenterId, auctionId);
+    }
+
+    /**
      * updates the comment text with the given comment id
      * returns the number of rows changed in the table (0 or 1)
      * if the text is blank or >255 characters returns 0

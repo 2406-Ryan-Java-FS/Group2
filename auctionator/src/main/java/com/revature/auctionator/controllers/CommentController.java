@@ -44,7 +44,7 @@ public class CommentController {
         Comment c = cs.getComment(id);
 
         if(c != null) return ResponseEntity.ok(c);
-        else return ResponseEntity.badRequest().body(null);
+        else return ResponseEntity.status(404).body(null);
     }
 
     /**
@@ -77,6 +77,18 @@ public class CommentController {
     @GetMapping("/comments/users/{id}")
     public ResponseEntity<List<Comment>> getAllCommentsFromUser(@PathVariable("id") int id){
         return ResponseEntity.ok(cs.getAllCommentsFromUser(id));
+    }
+
+    /**
+     * GET request handler to return a list of comments made by a user on an auction
+     * returns an empty list if no comments have either the specified commenterId or auctionId
+     * @param commenterId
+     * @param auctionId
+     * @return
+     */
+    @GetMapping("/comments/users/{commenterId}/auctions/{auctionId}")
+    public ResponseEntity<List<Comment>> getAllCommentsFromAUserForAnAuction(@PathVariable("commenterId") int commenterId, @PathVariable("auctionId") int auctionId){
+        return ResponseEntity.ok(cs.getAllCommentsFromAUserForAnAuction(commenterId, auctionId));
     }
 
     /**
