@@ -27,6 +27,15 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
      */
     List<Comment> findByAuctionId(int id);
 
+    /**
+     * returns a list of all Comments made by the user with the specified commenterId for an auction with the
+     * passed auctionId
+     * @param commenterId
+     * @param auctionId
+     * @return
+     */
+    List<Comment> findByCommenterIdAndAuctionId(int commenterId, int auctionId);
+
 
     /**
      * update the comment text for the comment with the associated comment id
