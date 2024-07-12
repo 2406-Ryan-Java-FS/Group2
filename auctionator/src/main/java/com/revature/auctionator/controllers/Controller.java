@@ -28,7 +28,7 @@ public class Controller {
         return us.getUser(id);
     }
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "/users", consumes = "application/json", produces = "application/json")
     public ResponseEntity<User> addUser(@RequestBody User u) {
         u = us.addUser(u);
         return new ResponseEntity<>(u, HttpStatus.OK);
