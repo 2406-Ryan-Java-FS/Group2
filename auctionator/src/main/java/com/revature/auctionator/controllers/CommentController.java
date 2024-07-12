@@ -44,7 +44,7 @@ public class CommentController {
         Comment c = cs.getComment(id);
 
         if(c != null) return ResponseEntity.ok(c);
-        else return ResponseEntity.badRequest().body(null);
+        else return ResponseEntity.status(404).body(null);
     }
 
     /**
