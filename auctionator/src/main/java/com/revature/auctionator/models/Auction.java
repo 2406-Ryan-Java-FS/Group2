@@ -16,10 +16,7 @@ public class Auction {
     @Column(name = "auction_item_id")
     private int item_id;
 
-    @Column(name = "bid", columnDefinition = "NUMERIC (10,2)")
-=======
     @Column(name = "bid", nullable = false, columnDefinition = "NUMERIC(10,2)")
->>>>>>> a6f5e2a80123f7e7986b1b79369142e831f8498e
     private double bid;
 
     @Column(name = "bidder_id")
