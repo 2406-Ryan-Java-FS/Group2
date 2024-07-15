@@ -84,6 +84,16 @@ public class Controller {
         }
     }
 
+    @PutMapping("users/{id}/balance")
+    public ResponseEntity<User> updateBalance(@PathVariable int id, @RequestBody double balance) {
+        User u = us.updateBalance(id, balance);
+        if(u != null) {
+            return new ResponseEntity<>(u, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/auctions")
     public List<Auction> getAllAuctions() { return as.getAllAuctions(); }
 

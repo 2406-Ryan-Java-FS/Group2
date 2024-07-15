@@ -12,4 +12,5 @@ public interface UserService {
     public User updateUser(User change);
     public boolean deleteUser(int id);
     public User logIn(String username, String password);
+    public User updateBalance(int id, double balance);
 }
