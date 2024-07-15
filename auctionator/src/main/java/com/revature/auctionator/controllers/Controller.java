@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
+@CrossOrigin
 public class Controller {
 
     UserService us;
@@ -46,7 +47,12 @@ public class Controller {
     @PostMapping(path = "/users", consumes = "application/json", produces = "application/json")
     public ResponseEntity<User> addUser(@RequestBody User u) {
         u = us.addUser(u);
-        return new ResponseEntity<>(u, HttpStatus.OK);
+        if (u != null) {
+            return new ResponseEntity<>(u, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/users/{id}")

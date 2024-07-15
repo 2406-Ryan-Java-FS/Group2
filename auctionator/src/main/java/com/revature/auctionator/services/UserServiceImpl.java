@@ -15,7 +15,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User addUser(User u) {
-        return ur.save(u);
+        try {
+            return ur.save(u);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
