@@ -11,6 +11,7 @@ public interface CommentService {
     public List<Comment> getAllComments();
     public List<Comment> getAllCommentsForAuction(int id);
     public List<Comment> getAllCommentsFromUser(int id);
+    public List<Comment> getAllCommentsFromAUserForAnAuction(int commenterId, int auctionId);
     public int updateCommentText(int id, String text);
     public int deleteComment(int id);
 

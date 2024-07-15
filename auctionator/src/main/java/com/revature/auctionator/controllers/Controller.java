@@ -34,11 +34,16 @@ public class Controller {
     }
 
     @GetMapping("/users/{id}")
-    public User getUser(@PathVariable int id) {
-        return us.getUser(id);
+    public ResponseEntity<User> getUser(@PathVariable int id) {
+        User u = us.getUser(id);
+        if(u.getId() == id) {
+            return new ResponseEntity<>(u, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "/users", consumes = "application/json", produces = "application/json")
     public ResponseEntity<User> addUser(@RequestBody User u) {
         u = us.addUser(u);
         return new ResponseEntity<>(u, HttpStatus.OK);
