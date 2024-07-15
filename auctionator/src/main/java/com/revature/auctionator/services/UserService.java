@@ -11,4 +11,5 @@ public interface UserService {
     public List<User> getAllUsers();
     public User updateUser(User change);
     public boolean deleteUser(int id);
+    public User logIn(String username, String password);
 }
