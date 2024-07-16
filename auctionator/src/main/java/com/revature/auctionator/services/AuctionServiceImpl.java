@@ -2,6 +2,7 @@ package com.revature.auctionator.services;
 
 import com.revature.auctionator.models.Auction;
 import com.revature.auctionator.models.Comment;
+import com.revature.auctionator.models.User;
 import com.revature.auctionator.repositories.AuctionRepo;
 import com.revature.auctionator.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,16 @@ public class AuctionServiceImpl implements AuctionService {
 
     @Override
     public Auction createAuction(Auction a) {
-        return ar.save(a);
+        try {
+            return ar.save(a);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public Auction getAuction(int id) {
-        Optional<Auction> optA = ar.findById(id);
-
-        return optA.orElse(null);
+        return ar.findById(id).orElseGet(Auction::new);
     }
 
     @Override
@@ -52,17 +55,17 @@ public class AuctionServiceImpl implements AuctionService {
             return this.getAuction(id);
         }
         else
-            return null;
+            return new Auction();
     }
 
     @Override
     public Auction updateAuctionTime(int id, int a_time) {
         int rowsUpdated = ar.updateAuctionTimeById(id, a_time);
-        if (rowsUpdated > 0 ){
+        if (rowsUpdated > 0){
             return this.getAuction(id);
         }
         else
-            return null;
+            return new Auction();
     }
 
     @Override

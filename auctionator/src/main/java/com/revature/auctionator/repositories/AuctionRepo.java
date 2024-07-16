@@ -17,11 +17,11 @@ public interface AuctionRepo extends JpaRepository<Auction, Integer> {
 
     @Modifying
     @Transactional
-    @Query("update Auction a set a.a_time = :status where a.id = :id")
+    @Query("update Auction a set a.status = :status where a.id = :id")
     int updateAuctionStatusById(@Param("id") int id, @Param("status") String status);
 
     @Modifying
     @Transactional
-    @Query("update Auction a set a.a_time = :time where a.id = :id")
+    @Query("update Auction a set a.time = :time where a.id = :id")
     int updateAuctionTimeById(@Param("id") int id, @Param("time") int time);
 }

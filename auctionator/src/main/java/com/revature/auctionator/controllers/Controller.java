@@ -98,19 +98,33 @@ public class Controller {
     public List<Auction> getAllAuctions() { return as.getAllAuctions(); }
 
     @GetMapping("/auctions/{id}")
-    public Auction getAuction(@PathVariable int id) { return as.getAuction(id); }
+    public ResponseEntity<Auction> getAuction(@PathVariable int id) {
+        Auction a = as.getAuction(id);
+        if(a.getId() == id) {
+            return new ResponseEntity<>(a, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }}
 
     @PostMapping("/auctions")
     public ResponseEntity<Auction> createAuction(@RequestBody Auction a) {
         a = as.createAuction(a);
-        return new ResponseEntity<>(a, HttpStatus.OK);
+        if (a != null){
+            return new ResponseEntity<>(a, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PatchMapping("/auctions/{id}/bid")
     public ResponseEntity<Auction> updateAuctionBid(@PathVariable("id") int id, @RequestBody Auction a){
         if(as.getAuction(id) != null) {
-            a = as.updateAuctionBid(id, a.getBid(), a.getBidder_id());
-            return new ResponseEntity<>(a, HttpStatus.OK);
+            if (as.getAuction(id).getBid() < a.getBid()){
+                Auction updatedAuction = as.updateAuctionBid(id, a.getBid(), a.getBidder_id());
+                return new ResponseEntity<>(updatedAuction, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
@@ -145,7 +159,7 @@ public class Controller {
         try{
             ObjectMapper om = new ObjectMapper();
             JsonNode jsonNode = om.readTree(time);
-            int updatedTime = Integer.parseInt(jsonNode.get("a_time").asText());
+            int updatedTime = jsonNode.get("time").asInt();
 
             if(updatedTime < 0) {
                 return ResponseEntity.badRequest().body(null);
