@@ -50,4 +50,25 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+    @Override
+    public User logIn(String username, String password) {
+        List<User> foundUser = ur.findByUsernameAndPassword(username, password);
+        if (!foundUser.isEmpty()) {
+            return foundUser.get(0);
+        } else {
+            return new User();
+        }
+    }
+
+    @Override
+    public User updateBalance(int id, double balance) {
+        User u = ur.findById(id).orElseGet(User::new);
+        if (u.getId() == id) {
+            u.setBalance(balance);
+            return ur.save(u);
+        } else {
+            return null;
+        }
+    }
 }

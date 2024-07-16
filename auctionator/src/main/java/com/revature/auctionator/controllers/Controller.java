@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @RestController
@@ -71,6 +72,26 @@ public class Controller {
     public ResponseEntity<Boolean> deleteUser(@PathVariable int id) {
         boolean wasDeleted = us.deleteUser(id);
         return new ResponseEntity<>(wasDeleted ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/users/{username}/{password}")
+    public ResponseEntity<User> logIn(@PathVariable String username, @PathVariable String password) {
+        User u = us.logIn(username, password);
+        if (Objects.equals(u.getUsername(), username) && Objects.equals(u.getPassword(), password)) {
+            return new ResponseEntity<>(u, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("users/{id}/balance")
+    public ResponseEntity<User> updateBalance(@PathVariable int id, @RequestBody double balance) {
+        User u = us.updateBalance(id, balance);
+        if(u != null) {
+            return new ResponseEntity<>(u, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/auctions")
