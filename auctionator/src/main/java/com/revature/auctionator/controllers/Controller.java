@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -61,8 +62,12 @@ public class Controller {
         u.setId(id);
         User u2 = us.getUser(id);
         if(u2.getId() == id) {
-            u = us.updateUser(u);
-            return new ResponseEntity<>(u, HttpStatus.OK);
+            try {
+                u = us.updateUser(u);
+                return new ResponseEntity<>(u, HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
