@@ -47,13 +47,13 @@ export default function UserSignup() {
 
                 console.log(body);
                 if (body) {
-                    alert("User Successfully Added");
+                    alert("Signup successful!");
                     logInUser(body);
                 } else {
                     alert("User Failed to be added.");
                 }
             } catch (error) {
-                alert("User Failed to be added.");
+                alert("User with that username already exists.");
             }
         }
     }
