@@ -5,7 +5,9 @@ export default function UpdateUserBalance() {
     const newBalanceInput = useRef();
 
     async function updateBalance() {
-        if (idInput.current.value%1 !== 0 || idInput.current.value <= 0) {
+        if (idInput.current.value === "" || newBalanceInput.current.value === "") {
+            alert("Field left blank.")
+        } else if (idInput.current.value%1 !== 0 || idInput.current.value <= 0) {
             alert("ID must be a positive whole number.");
         } else if (newBalanceInput.current.value < 0) {
             alert("Balance cannot be negative.");
@@ -29,7 +31,7 @@ export default function UpdateUserBalance() {
                     alert("Balance Failed to be updated.")
                 }
             } catch (error) {
-                alert("Balance Failed to be updated.")
+                alert("User could not be found.")
             }
         }
     }
