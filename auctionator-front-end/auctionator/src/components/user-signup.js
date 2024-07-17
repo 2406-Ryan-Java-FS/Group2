@@ -59,15 +59,15 @@ export default function UserSignup() {
     }
 
     return (<>
-        <label htmlFor="fn">First Name:</label>
+        <label htmlFor="fn">First Name: </label>
         <input type="text" id="fn" ref={firstNameInput} /><br />
-        <label htmlFor="ln">Last Name:</label>
+        <label htmlFor="ln">Last Name: </label>
         <input type="text" id="ln" ref={lastNameInput} /><br />
-        <label htmlFor="un2">Username:</label>
+        <label htmlFor="un2">Username: </label>
         <input type="text" id="un2" ref={newUsernameInput} /><br />
-        <label htmlFor="pw2">Password:</label>
+        <label htmlFor="pw2">Password: </label>
         <input type="password" id="pw2" ref={newPasswordInput} /><br />
-        <label htmlFor="bal">Balance:</label>
+        <label htmlFor="bal">Balance: </label>
         <input type="number" id="bal" ref={balanceInput} min="0" defaultValue="0" /><br />
         <input type="radio" id="roleC" name="roleInput" value="Client"
         checked={roleInput === "Client"} onChange={() => updateRole("Client")}/>
