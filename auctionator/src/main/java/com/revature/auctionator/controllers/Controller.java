@@ -99,8 +99,11 @@ public class Controller {
         }
     }
 
-    @GetMapping("/auctions")
+    @GetMapping("/auctions/admin")
     public List<Auction> getAllAuctions() { return as.getAllAuctions(); }
+
+    @GetMapping("/auctions/client")
+    public List<Auction> getActiveAuctions() { return as.getActiveAuctions(); }
 
     @GetMapping("/auctions/{id}")
     public ResponseEntity<Auction> getAuction(@PathVariable int id) {

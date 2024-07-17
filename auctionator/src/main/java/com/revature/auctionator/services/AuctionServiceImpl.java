@@ -1,15 +1,13 @@
 package com.revature.auctionator.services;
 
 import com.revature.auctionator.models.Auction;
-import com.revature.auctionator.models.Comment;
-import com.revature.auctionator.models.User;
 import com.revature.auctionator.repositories.AuctionRepo;
-import com.revature.auctionator.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 @Service
 public class AuctionServiceImpl implements AuctionService {
@@ -37,6 +35,18 @@ public class AuctionServiceImpl implements AuctionService {
 
     @Override
     public List<Auction> getAllAuctions() { return ar.findAll(); }
+
+    @Override
+    public List<Auction> getActiveAuctions() {
+        List<Auction> activeAuctions = new LinkedList<>();
+        List<Auction> allAuctions = ar.findAll();
+        for(Auction a : allAuctions){
+            if (Objects.equals(a.getStatus(), "Active")){
+                activeAuctions.add(a);
+            }
+        }
+        return activeAuctions;
+    }
 
     @Override
     public Auction updateAuctionBid(int id, double bid, int bidder_id) {
