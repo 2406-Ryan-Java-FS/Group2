@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from "react";
-import { AppContext } from '../AppContext';
+import { UserContext } from '../UserContext';
 
 export default function UserSignup() {
     
@@ -12,7 +12,7 @@ export default function UserSignup() {
     const [roleInput, setRoleInput] = useState("Client");
     const updateRole = (value) => setRoleInput(value);
 
-    const { logInUser } = useContext(AppContext);
+    const { logInUser } = useContext(UserContext);
 
     async function signUp() {
         if (firstNameInput.current.value === "" || lastNameInput.current.value === "" ||

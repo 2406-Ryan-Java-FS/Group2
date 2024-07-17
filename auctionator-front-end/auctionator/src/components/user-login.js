@@ -1,10 +1,10 @@
 import { useContext, useRef } from "react";
-import { AppContext } from '../AppContext';
+import { UserContext } from '../UserContext';
 
 export default function UserLogin() {
     const usernameInput = useRef();
     const passwordInput = useRef();
-    const { logInUser } = useContext(AppContext);
+    const { logInUser } = useContext(UserContext);
 
     async function signIn() {
         if (usernameInput.current.value === "" || passwordInput.current.value === "") {
