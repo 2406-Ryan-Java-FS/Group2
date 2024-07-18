@@ -2,6 +2,7 @@ package com.revature.auctionator.controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.auctionator.models.AuctionUserItemDTO;
 import com.revature.auctionator.models.User;
 import com.revature.auctionator.services.UserService;
 import com.revature.auctionator.models.Auction;
@@ -100,10 +101,10 @@ public class Controller {
     }
 
     @GetMapping("/auctions/admin")
-    public List<Auction> getAllAuctions() { return as.getAllAuctions(); }
+    public List<AuctionUserItemDTO> getAllAuctions() { return as.getAllAuctions(); }
 
     @GetMapping("/auctions/client")
-    public List<Auction> getActiveAuctions() { return as.getActiveAuctions(); }
+    public List<AuctionUserItemDTO> getActiveAuctions() { return as.getActiveAuctions(); }
 
     @GetMapping("/auctions/{id}")
     public ResponseEntity<Auction> getAuction(@PathVariable int id) {

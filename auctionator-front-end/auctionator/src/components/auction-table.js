@@ -9,16 +9,21 @@ export default function AuctionTable(){
     const [auctions, setAuctions] = useState([]);
     const auctionTableRows = auctions.map(a =>
         <tr key={a.id}>
-            <td>{a.name}</td>
-            <td>{a.age}</td>
-            <td>{a.worth}</td>
+            <td>{a.itemName}</td>
+            <td>{a.bid}</td>
+            <td>{a.firstname + " " + a.lastname}</td>
+            <td>{a.status}</td>
+            <td>{a.time}</td>
         </tr>
     );
 
 
     async function getAllAuctions() {
 
-        const url = "http://localhost:8080/auctions";
+        let url = "http://localhost:8080/auctions/client";
+        if(logInUser['role'] == "Admin") {
+            url = "http://localhost:8080/auctions/admin";
+        }
         const httpResponse = await fetch(url);
         console.log(httpResponse)
         const auctionList = await httpResponse.json();
@@ -40,9 +45,12 @@ export default function AuctionTable(){
         <table style={tableStyle} className={styles.actorTable} >
             <thead>
                 <tr>
+                    <th>Auction ID</th>
                     <th>Item</th>
                     <th>Current Bid</th>
-                    <th>Worth</th>
+                    <th>Latest Bidder</th>
+                    <th>Status</th>
+                    <th>Minutes Left</th>
                 </tr>
             </thead>
             <tbody>
