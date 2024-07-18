@@ -49,6 +49,8 @@ export default function UserSignup() {
                 if (body) {
                     alert("Signup successful!");
                     logInUser(body);
+                    const roleLink = body['role'] === 'Client' ? "/client" : "/admin";
+                    window.location.href = roleLink;
                 } else {
                     alert("User Failed to be added.");
                 }

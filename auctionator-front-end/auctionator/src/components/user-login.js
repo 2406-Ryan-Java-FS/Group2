@@ -1,5 +1,6 @@
 import { useContext, useRef } from "react";
 import { UserContext } from '../UserContext';
+// import { Link } from "react-router-dom";
 
 export default function UserLogin() {
     const usernameInput = useRef();
@@ -18,7 +19,10 @@ export default function UserLogin() {
                 console.log(body);
                 if (body) {
                     logInUser(body);
+                    const roleLink = body['role'] === 'Client' ? "/client" : "/admin";
+                    console.log(roleLink);
                     alert("User Successfully Logged In");
+                    window.location.href = roleLink;
                 } else {
                     alert("User Failed to be logged in.");
                 }
