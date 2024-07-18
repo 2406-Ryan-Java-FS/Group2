@@ -29,13 +29,9 @@ export default function GetAllUsers() {
         getAllUsers();
     }, []);
 
-    const tableStyle = {
-        border: "1px solid black"
-    }
-
     return(<>
         <br/>
-        <table style={tableStyle} className={styles.userTable}>
+        <table style={{border: "1px solid black"}} className={styles.userTable}>
             <thead>
                 <tr>
                     <th>First Name</th>
