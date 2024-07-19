@@ -1,11 +1,12 @@
 import { useContext, useRef } from "react";
 import { UserContext } from '../UserContext';
-// import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function UserLogin() {
     const usernameInput = useRef();
     const passwordInput = useRef();
     const { logInUser } = useContext(UserContext);
+    const nav = useNavigate();
 
     async function signIn() {
         if (usernameInput.current.value === "" || passwordInput.current.value === "") {
@@ -19,10 +20,8 @@ export default function UserLogin() {
                 console.log(body);
                 if (body) {
                     logInUser(body);
-                    const roleLink = body['role'] === 'Client' ? "/client" : "/admin";
-                    console.log(roleLink);
                     alert("User Successfully Logged In");
-                    window.location.href = roleLink;
+                    nav("/profile");
                 } else {
                     alert("User Failed to be logged in.");
                 }
@@ -38,5 +37,6 @@ export default function UserLogin() {
         <label htmlFor="pw">Password: </label>
         <input type="password" id="pw" ref={passwordInput} /><br />
         <button onClick={signIn}>Log In</button>
+        
     </>)
 }
