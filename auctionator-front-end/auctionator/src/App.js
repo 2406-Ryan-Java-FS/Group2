@@ -15,11 +15,12 @@ import { ClientItemProvider } from './components/item-components/client-item-com
 import ClientItemView from './components/item-components/client-item-components/client-item-view';
 import { AdminItemProvider } from './components/item-components/admin-item-components/admin-item-context';
 import AdminItemView from './components/item-components/admin-item-components/admin-item-view';
-import UserProvider from './UserContext';
+import UserProvider, { UserContext } from './UserContext';
 import AuctionTable from './components/auction-table';
 import CreateAuction from './components/create-auction';
 import UpdateAuctionAdmin from './components/update-auction-admin';
 import UpdateAuctionClient from './components/update-auction-client';
+import { useContext } from 'react';
 
 function AuctionUpdate(props) {
   const isAdmin = props.isAdmin;
@@ -40,9 +41,10 @@ function AuctionCreate(props) {
 }
 
 function App() {
+  const { user } = useContext(UserContext);
+
   return (
-    <UserProvider>
-      <Routes>
+    <Routes>
         <Route path='' element={<StartPage />} />
         <Route path='signup' element={<UserSignup />} />
         <Route path='login' element={<UserLogin />} />
@@ -52,6 +54,9 @@ function App() {
         <Route path='setbalance' element={<UpdateUserBalance />} />
         <Route path='setinfo' element={<UpdateUserInfo />} />
         <Route path='profile' element={<UserProfile />} />
+        <Route path='auction-table' element={<AuctionTable/>} />
+        <Route path='create-auction' element={user['role']==="Admin" && <CreateAuction/>} />
+        <Route path='update-auction' element={user['role']==="Admin" ? <UpdateAuctionAdmin/> : <UpdateAuctionClient/>} />
         <Route path='client-item-view' element={
           <ClientItemProvider>
             <ClientItemView />
@@ -62,8 +67,7 @@ function App() {
             <AdminItemView />
           </AdminItemProvider>
         } />
-      </Routes>
-    </UserProvider>
+    </Routes>
   );
 }
 

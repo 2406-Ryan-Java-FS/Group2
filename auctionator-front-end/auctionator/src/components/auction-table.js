@@ -3,8 +3,7 @@ import { UserContext } from '../UserContext';
 
 export default function AuctionTable(){
     //track the current logged-in user to check permissions
-    const user = {role: "Admin"};
-    //const { user } = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
     //map the Auctions table to an array object to load into the fragment
     const [auctions, setAuctions] = useState([]);

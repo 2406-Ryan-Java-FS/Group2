@@ -5,7 +5,7 @@ export default function UserLogout() {
     const { logInUser } = useContext(UserContext);
     
     function logOut() {
-        logInUser(null);
+        logInUser({role: "Client"});
         alert("User Successfully Logged Out");
         window.location.href = '/';
     }

@@ -1,5 +1,6 @@
 package com.revature.auctionator.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.revature.auctionator.exceptions.InvalidItemException;
@@ -24,7 +25,7 @@ public class ItemRestController {
 
     private ItemService itemService;
 
-    // implicit autowired - sole constructor
+    @Autowired
     public ItemRestController(ItemService itemService) {
         this.itemService = itemService;
     }
@@ -61,7 +62,6 @@ public class ItemRestController {
 
      /**
      * handler to get a item by id
-     * @param itemId the id of the item to retrieve
      * @return a response entity containing the item if found or a 404 error message if not found
      */
     @GetMapping("/items/{theItemId}")

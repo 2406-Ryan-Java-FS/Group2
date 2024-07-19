@@ -1,12 +1,9 @@
 import { UserContext } from '../UserContext';
-import { useRef } from 'react';
+import { useRef, useContext } from 'react';
 
 export default function UpdateAuctionAdmin(){
     
-    const user = {
-        id: "1",
-        role: "Client"
-    };
+    const { user } = useContext(UserContext);
     const idInput = useRef();
     const bidInput = useRef();
     const statusInput = useRef();
