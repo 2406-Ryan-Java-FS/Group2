@@ -7,6 +7,7 @@ export default function UserLogout() {
     function logOut() {
         logInUser(null);
         alert("User Successfully Logged Out");
+        window.location.href = '/';
     }
 
     return (<>
