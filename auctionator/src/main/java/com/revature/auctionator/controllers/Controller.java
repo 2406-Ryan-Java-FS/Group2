@@ -2,6 +2,7 @@ package com.revature.auctionator.controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.auctionator.models.AuctionUserItemDTO;
 import com.revature.auctionator.models.User;
 import com.revature.auctionator.services.UserService;
 import com.revature.auctionator.models.Auction;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -61,8 +63,12 @@ public class Controller {
         u.setId(id);
         User u2 = us.getUser(id);
         if(u2.getId() == id) {
-            u = us.updateUser(u);
-            return new ResponseEntity<>(u, HttpStatus.OK);
+            try {
+                u = us.updateUser(u);
+                return new ResponseEntity<>(u, HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
@@ -94,8 +100,11 @@ public class Controller {
         }
     }
 
-    @GetMapping("/auctions")
-    public List<Auction> getAllAuctions() { return as.getAllAuctions(); }
+    @GetMapping("/auctions/admin")
+    public List<AuctionUserItemDTO> getAllAuctions() { return as.getAllAuctions(); }
+
+    @GetMapping("/auctions/client")
+    public List<AuctionUserItemDTO> getActiveAuctions() { return as.getActiveAuctions(); }
 
     @GetMapping("/auctions/{id}")
     public ResponseEntity<Auction> getAuction(@PathVariable int id) {
