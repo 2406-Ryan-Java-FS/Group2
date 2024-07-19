@@ -1,14 +1,17 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { UserContext } from '../UserContext';
 
 export default function AuctionTable(){
     //track the current logged-in user to check permissions
-    const { logInUser } = useContext(UserContext);
+    const user = {role: "Admin"};
+    //const { user } = useContext(UserContext);
 
     //map the Auctions table to an array object to load into the fragment
     const [auctions, setAuctions] = useState([]);
-    const auctionTableRows = auctions.map(a =>
-        <tr key={a.id}>
+    //const currentBid = (bidInput.current.value) ? bidInput.current.value : 1;
+    const auctionTableRows = auctions.map((a, i) =>
+        <tr key={a.auctionId}>
+            <td>{a.auctionId}</td>
             <td>{a.itemName}</td>
             <td>{a.bid}</td>
             <td>{a.firstname + " " + a.lastname}</td>
@@ -17,11 +20,10 @@ export default function AuctionTable(){
         </tr>
     );
 
-
     async function getAllAuctions() {
 
         let url = "http://localhost:8080/auctions/client";
-        if(logInUser['role'] == "Admin") {
+        if(user['role'] == "Admin") {
             url = "http://localhost:8080/auctions/admin";
         }
         const httpResponse = await fetch(url);
@@ -42,7 +44,7 @@ export default function AuctionTable(){
 
     return (<>
         <br />
-        <table style={tableStyle} className={styles.actorTable} >
+        <table style={tableStyle} >
             <thead>
                 <tr>
                     <th>Auction ID</th>
