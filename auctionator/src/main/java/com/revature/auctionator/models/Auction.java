@@ -26,7 +26,7 @@ public class Auction {
     private String status;
 
     @Column(name = "a_time")
-    private int a_time;
+    private int time;
 
     public Auction() {
     }
@@ -37,7 +37,7 @@ public class Auction {
         this.bid = bid;
         this.bidder_id = bidder_id;
         this.status = status;
-        this.a_time = a_time;
+        this.time = a_time;
     }
 
     public Auction(double bid, int bidder_id) {
@@ -55,7 +55,7 @@ public class Auction {
 
     public String getStatus() { return status; }
 
-    public int getA_time() { return a_time; }
+    public int getA_time() { return time; }
 
     public void setA_id(int a_id) { this.id = a_id; }
 
@@ -67,7 +67,7 @@ public class Auction {
 
     public void setStatus(String status) { this.status = status; }
 
-    public void setA_time(int a_time) { this.a_time = a_time; }
+    public void setA_time(int a_time) { this.time = a_time; }
 
     @Override
     public boolean equals(Object o) {
@@ -86,11 +86,11 @@ public class Auction {
     public String toString() {
         return "Auction{" +
                 "a_id=" + id +
-                ", item_id=" + item_id +
+                ", auction_item_id=" + item_id +
                 ", bid=" + bid +
                 ", bidder_id=" + bidder_id +
                 ", status='" + status + '\'' +
-                ", a_time=" + a_time +
+                ", a_time=" + time +
                 '}';
     }
 }

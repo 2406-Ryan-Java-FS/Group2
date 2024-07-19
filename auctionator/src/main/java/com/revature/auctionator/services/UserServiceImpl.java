@@ -15,7 +15,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User addUser(User u) {
-        return ur.save(u);
+        try {
+            return ur.save(u);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
@@ -45,5 +49,26 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public User logIn(String username, String password) {
+        List<User> foundUser = ur.findByUsernameAndPassword(username, password);
+        if (!foundUser.isEmpty()) {
+            return foundUser.get(0);
+        } else {
+            return new User();
+        }
+    }
+
+    @Override
+    public User updateBalance(int id, double balance) {
+        User u = ur.findById(id).orElseGet(User::new);
+        if (u.getId() == id) {
+            u.setBalance(balance);
+            return ur.save(u);
+        } else {
+            return null;
+        }
     }
 }
