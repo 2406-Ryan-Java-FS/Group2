@@ -1,5 +1,6 @@
 import { useContext, useRef, useState } from "react";
 import { UserContext } from '../UserContext';
+import { useNavigate } from "react-router-dom";
 
 export default function UserSignup() {
     
@@ -11,6 +12,7 @@ export default function UserSignup() {
     
     const [roleInput, setRoleInput] = useState("Client");
     const updateRole = (value) => setRoleInput(value);
+    const nav = useNavigate();
 
     const { logInUser } = useContext(UserContext);
 
@@ -49,6 +51,14 @@ export default function UserSignup() {
                 if (body) {
                     alert("Signup successful!");
                     logInUser(body);
+                    if (body.role === "Client") 
+                    {
+                        nav("/client-item-view");
+                    } 
+                    else 
+                    {
+                        nav("/admin-item-view");
+                    }
                 } else {
                     alert("User Failed to be added.");
                 }
