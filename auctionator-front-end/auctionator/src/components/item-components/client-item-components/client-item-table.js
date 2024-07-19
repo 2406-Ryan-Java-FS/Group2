@@ -5,8 +5,8 @@ import { capitalizeWords, changeStatus, EditableCell } from "../utils/item-utili
 export default function ClientItemTable() {
     const { userItems, deleteItem, handleCellChange, patchChanges } = useContext(ClientItemContext);
     return (
-        <table className="table table-striped table-hover">
-            <thead>
+        <table className="table table-striped table-sm">
+            <thead className="table-dark">
                 <tr>
                     <th scope="col" className="text-center">#</th>
                     <th scope="col" className="text-center">Item Name</th>

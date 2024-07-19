@@ -21,7 +21,7 @@ export default function UserLogin() {
                 if (body) {
                     logInUser(body);
                     alert("User Successfully Logged In");
-                    if (body.role === "client") 
+                    if (body.role === "Client") 
                     {
                         nav("/client-item-view");
                     } 

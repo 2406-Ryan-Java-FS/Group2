@@ -6,8 +6,8 @@ export default function AdminItemTable(){
     const { allUserItems, deleteItem, handleCellChange, patchChanges } = useContext(AdminItemContext);
 
     return (
-        <table className="table table-hover table-striped">
-            <thead>
+        <table className="table table-hover table-striped table-sm">
+            <thead className="table-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Item Name</th>
