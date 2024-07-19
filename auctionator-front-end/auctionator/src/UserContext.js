@@ -4,7 +4,7 @@ export const UserContext = createContext();
 
 export default function UserProvider({ children }) {
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState({role: "Client"});
 
     function logInUser(newUser) {
         setUser(newUser);

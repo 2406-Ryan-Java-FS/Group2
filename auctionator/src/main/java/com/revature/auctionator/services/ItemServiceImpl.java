@@ -3,6 +3,7 @@ package com.revature.auctionator.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.auctionator.exceptions.InvalidItemException;
@@ -19,7 +20,7 @@ public class ItemServiceImpl implements ItemService{
     private UserRepo userRepository;
 
     
-    // implicit autowired - sole constructor
+    @Autowired
     public ItemServiceImpl(ItemRepository itemRepository, UserRepo userRepository) {
         this.itemRepository = itemRepository;
         this.userRepository = userRepository;
@@ -153,7 +154,6 @@ public class ItemServiceImpl implements ItemService{
 
     /**
      * updates an existing item
-     * @param theNewItem the item data we want to update
      * @param theItemId the id of the item we want to update
      * @return the updated item object if the update is successful
      * @throws InvalidItemException if the item update does not succeed
