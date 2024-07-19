@@ -2,6 +2,7 @@ package com.revature.auctionator.controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.auctionator.models.AuctionUserItemDTO;
 import com.revature.auctionator.models.User;
 import com.revature.auctionator.services.UserService;
 import com.revature.auctionator.models.Auction;
@@ -11,11 +12,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @RestController
+@CrossOrigin
 public class Controller {
 
     UserService us;
@@ -46,7 +50,12 @@ public class Controller {
     @PostMapping(path = "/users", consumes = "application/json", produces = "application/json")
     public ResponseEntity<User> addUser(@RequestBody User u) {
         u = us.addUser(u);
-        return new ResponseEntity<>(u, HttpStatus.OK);
+        if (u != null) {
+            return new ResponseEntity<>(u, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/users/{id}")
@@ -54,8 +63,12 @@ public class Controller {
         u.setId(id);
         User u2 = us.getUser(id);
         if(u2.getId() == id) {
-            u = us.updateUser(u);
-            return new ResponseEntity<>(u, HttpStatus.OK);
+            try {
+                u = us.updateUser(u);
+                return new ResponseEntity<>(u, HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
@@ -67,23 +80,60 @@ public class Controller {
         return new ResponseEntity<>(wasDeleted ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/auctions")
-    public List<Auction> getAllAuctions() { return as.getAllAuctions(); }
+    @GetMapping("/users/{username}/{password}")
+    public ResponseEntity<User> logIn(@PathVariable String username, @PathVariable String password) {
+        User u = us.logIn(username, password);
+        if (Objects.equals(u.getUsername(), username) && Objects.equals(u.getPassword(), password)) {
+            return new ResponseEntity<>(u, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("users/{id}/balance")
+    public ResponseEntity<User> updateBalance(@PathVariable int id, @RequestBody double balance) {
+        User u = us.updateBalance(id, balance);
+        if(u != null) {
+            return new ResponseEntity<>(u, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/auctions/admin")
+    public List<AuctionUserItemDTO> getAllAuctions() { return as.getAllAuctions(); }
+
+    @GetMapping("/auctions/client")
+    public List<AuctionUserItemDTO> getActiveAuctions() { return as.getActiveAuctions(); }
 
     @GetMapping("/auctions/{id}")
-    public Auction getAuction(@PathVariable int id) { return as.getAuction(id); }
+    public ResponseEntity<Auction> getAuction(@PathVariable int id) {
+        Auction a = as.getAuction(id);
+        if(a.getId() == id) {
+            return new ResponseEntity<>(a, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }}
 
     @PostMapping("/auctions")
     public ResponseEntity<Auction> createAuction(@RequestBody Auction a) {
         a = as.createAuction(a);
-        return new ResponseEntity<>(a, HttpStatus.OK);
+        if (a != null){
+            return new ResponseEntity<>(a, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PatchMapping("/auctions/{id}/bid")
     public ResponseEntity<Auction> updateAuctionBid(@PathVariable("id") int id, @RequestBody Auction a){
         if(as.getAuction(id) != null) {
-            a = as.updateAuctionBid(id, a.getBid(), a.getBidder_id());
-            return new ResponseEntity<>(a, HttpStatus.OK);
+            if (as.getAuction(id).getBid() < a.getBid()){
+                Auction updatedAuction = as.updateAuctionBid(id, a.getBid(), a.getBidder_id());
+                return new ResponseEntity<>(updatedAuction, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
@@ -118,7 +168,7 @@ public class Controller {
         try{
             ObjectMapper om = new ObjectMapper();
             JsonNode jsonNode = om.readTree(time);
-            int updatedTime = Integer.parseInt(jsonNode.get("a_time").asText());
+            int updatedTime = jsonNode.get("time").asInt();
 
             if(updatedTime < 0) {
                 return ResponseEntity.badRequest().body(null);

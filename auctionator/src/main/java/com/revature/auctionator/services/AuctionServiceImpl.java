@@ -1,39 +1,56 @@
 package com.revature.auctionator.services;
 
 import com.revature.auctionator.models.Auction;
-import com.revature.auctionator.models.Comment;
+import com.revature.auctionator.models.AuctionUserItemDTO;
 import com.revature.auctionator.repositories.AuctionRepo;
 import com.revature.auctionator.repositories.ItemRepository;
+import com.revature.auctionator.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 @Service
 public class AuctionServiceImpl implements AuctionService {
 
-    @Autowired
-    AuctionRepo ar;
 
-    public AuctionServiceImpl(AuctionRepo auctionRepo) {
-        this.ar = auctionRepo;
+    private AuctionRepo ar;
+
+    @Autowired
+    public AuctionServiceImpl(AuctionRepo ar) {
+        this.ar = ar;
     }
 
     @Override
     public Auction createAuction(Auction a) {
-        return ar.save(a);
+        try {
+            return ar.save(a);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public Auction getAuction(int id) {
-        Optional<Auction> optA = ar.findById(id);
-
-        return optA.orElse(null);
+        return ar.findById(id).orElseGet(Auction::new);
     }
 
     @Override
-    public List<Auction> getAllAuctions() { return ar.findAll(); }
+    public List<AuctionUserItemDTO> getAllAuctions() { return ar.findAllAuctionsAndUserInfoAndItemInfo(); }
+
+    @Override
+    public List<AuctionUserItemDTO> getActiveAuctions() {
+        List<AuctionUserItemDTO> activeAuctions = new LinkedList<>();
+        List<AuctionUserItemDTO> allAuctions = ar.findAllAuctionsAndUserInfoAndItemInfo();
+        for(AuctionUserItemDTO a : allAuctions){
+            if (Objects.equals(a.getStatus(), "Active")){
+                activeAuctions.add(a);
+            }
+        }
+        return activeAuctions;
+    }
 
     @Override
     public Auction updateAuctionBid(int id, double bid, int bidder_id) {
@@ -52,17 +69,17 @@ public class AuctionServiceImpl implements AuctionService {
             return this.getAuction(id);
         }
         else
-            return null;
+            return new Auction();
     }
 
     @Override
     public Auction updateAuctionTime(int id, int a_time) {
         int rowsUpdated = ar.updateAuctionTimeById(id, a_time);
-        if (rowsUpdated > 0 ){
+        if (rowsUpdated > 0){
             return this.getAuction(id);
         }
         else
-            return null;
+            return new Auction();
     }
 
     @Override
