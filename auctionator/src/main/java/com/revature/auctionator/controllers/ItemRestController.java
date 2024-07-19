@@ -4,13 +4,19 @@ import org.springframework.web.bind.annotation.*;
 
 import com.revature.auctionator.exceptions.InvalidItemException;
 import com.revature.auctionator.models.Item;
+import com.revature.auctionator.models.ItemUserDTO;
 import com.revature.auctionator.services.ItemService;
 
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @CrossOrigin
@@ -30,6 +36,26 @@ public class ItemRestController {
     @GetMapping("/items")
     public ResponseEntity<?> getAllItems() {
         List<Item> allItems = itemService.findAllItems();
+        return ResponseEntity.ok(allItems);
+    }
+
+    /**
+     * handler to get all items with the user information.
+     * @return a list of item objects wrapped in a ResponseEntity as the response body to the HTTP caller.
+     */
+    @GetMapping("all-users/items")
+    public ResponseEntity<?> getAllItemsAndUserInfo() {
+        List<ItemUserDTO> allItems = itemService.findAllItemsAndUserInfo();
+        return ResponseEntity.ok(allItems);
+    }
+
+    /**
+     * handler to get all items with the user information.
+     * @return a list of item objects wrapped in a ResponseEntity as the response body to the HTTP caller.
+     */
+    @GetMapping("{username}/items")
+    public ResponseEntity<?> getAllItemsByUsername(@PathVariable String username) {
+        List<ItemUserDTO> allItems = itemService.findAllItemsByUsername(username);
         return ResponseEntity.ok(allItems);
     }
 
@@ -67,6 +93,22 @@ public class ItemRestController {
          * Pass the Username
          */
     }
+
+    /**
+     * handler to add a new item to the data base
+     * @param theNewItem the item data that we will add to the database
+     * @return  a response entity containing the added item or a 400 error message
+     */
+    @PostMapping("{username}/add-items")
+    public ResponseEntity<?> addNewItemByUsername(@RequestBody Item theNewItem, @PathVariable String username) {
+        try {
+            Item theItem = itemService.addNewItemByUsername(theNewItem, username);
+            return ResponseEntity.ok(theItem);
+        } catch (InvalidItemException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
 
     /**
      * handler to update any information for an existing user in the database

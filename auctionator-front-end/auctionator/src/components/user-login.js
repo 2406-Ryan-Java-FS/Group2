@@ -21,8 +21,17 @@ export default function UserLogin() {
                 if (body) {
                     logInUser(body);
                     alert("User Successfully Logged In");
-                    nav("/profile");
-                } else {
+                    if (body.role === "Client") 
+                    {
+                        nav("/client-item-view");
+                    } 
+                    else 
+                    {
+                    nav("/admin-item-view");
+                    }
+                } 
+                else 
+                {
                     alert("User Failed to be logged in.");
                 }
             } catch (error) {

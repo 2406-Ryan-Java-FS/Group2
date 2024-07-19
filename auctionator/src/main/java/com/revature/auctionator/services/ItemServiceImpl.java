@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.revature.auctionator.exceptions.InvalidItemException;
 import com.revature.auctionator.models.Item;
+import com.revature.auctionator.models.ItemUserDTO;
+import com.revature.auctionator.models.User;
 import com.revature.auctionator.repositories.ItemRepository;
 import com.revature.auctionator.repositories.UserRepo;
 
@@ -29,6 +31,24 @@ public class ItemServiceImpl implements ItemService{
      */
     public List<Item> findAllItems(){
         List<Item> items = itemRepository.findAll();
+        return items;
+    }
+
+    /**
+     * retrieves all item entities from the repository with the username attached.
+     * @return a list of all item entities.
+     */
+    public List<ItemUserDTO> findAllItemsAndUserInfo(){
+        List<ItemUserDTO> items = itemRepository.findAllItemsAndUserInfo();
+        return items;
+    }
+
+    /**
+     * retrieves all item entities from the repository with the username attached.
+     * @return a list of all item entities.
+     */
+    public List<ItemUserDTO> findAllItemsByUsername(String username){
+        List<ItemUserDTO> items = itemRepository.findAllItemsByUsername(username);
         return items;
     }
 
@@ -92,13 +112,43 @@ public class ItemServiceImpl implements ItemService{
 
         Item dBItem = itemRepository.save(theNewItem);
         return dBItem;
+    }
 
-        /**
-         * Optional Front End addNewItem service option
-         * Pass the Username
-         * Check for Client ID in the DB
-         * Update the item through the ID fetched through the username
-         */
+    /**
+     * Adds a new item to the repository via username
+     * 
+     * @param theNewItem the item data we want to add
+     * @param username the username of the account to which the item will be added
+     * @return the saved item object if the addition is successful
+     * @throws InvalidItemException if the item addition does not succeed
+     */
+    @Override
+    public Item addNewItemByUsername(Item theNewItem, String username) {
+        // Reject if the item name is null or empty
+        if (theNewItem.getItemName() == null || theNewItem.getItemName().trim().isEmpty()) {
+            throw new InvalidItemException("Please fill out the required field: Item Name");
+        }
+
+        // Remove the item ID if it is provided
+        theNewItem.setId(null);
+
+        // Set the sold value to false if it is not provided
+        if (theNewItem.getSold() == null) {
+            theNewItem.setSold(false);
+        }
+
+        // Find the user by username
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new InvalidItemException("User not found: " + username);
+        }
+
+        // Set the owner ID
+        theNewItem.setOwnerId(user.getId());
+
+        // Save the new item to the repository
+        Item dBItem = itemRepository.save(theNewItem);
+        return dBItem;
     }
 
     /**
@@ -139,30 +189,6 @@ public class ItemServiceImpl implements ItemService{
         // else - save since it exists
         Item updatedItem = itemRepository.save(dBItem);
         return updatedItem;
-
-        /**
-     *  Optional Addition to UpdateFunctionality After Next Pull
-        // if a true sold status is given
-        if(theItem.getSold() != null && theItem.getSold() == true)
-        {
-            // check to see if the item exists in the auction table
-            Optional<Auction> auction = auctionRepository.findByAuctionItemId(theItem.getId());
-            if(!auction.isPresent())
-            {
-                // set the value to false - since items not on the table haven't/can't be sold
-                theItem.setSold(false);
-            }
-            else{
-                // if it does exist on the table
-                String status = auction.get().getStatus();
-                if(status == "Active" || status == "active")
-                {
-                    theItem.setSold(false);
-                }
-            }
-        }
-
-     */
     }
 
      /**

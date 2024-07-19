@@ -51,7 +51,14 @@ export default function UserSignup() {
                 if (body) {
                     alert("Signup successful!");
                     logInUser(body);
-                    nav("/profile");
+                    if (body.role === "Client") 
+                    {
+                        nav("/client-item-view");
+                    } 
+                    else 
+                    {
+                        nav("/admin-item-view");
+                    }
                 } else {
                     alert("User Failed to be added.");
                 }
