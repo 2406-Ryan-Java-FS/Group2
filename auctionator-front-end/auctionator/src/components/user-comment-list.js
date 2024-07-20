@@ -1,17 +1,21 @@
 import {  useEffect, useCallback, useState, useContext } from 'react';
-import { AppContext } from '../CommentContext';
 import CommentEditableCell from './comment-editable-cell';
+import { UserContext } from '../UserContext';
 
-export default function AuctionCommentList() {
+export default function UserCommentList() {
 
-    const { userId } = useContext(AppContext);
+    const { user } = useContext(UserContext);
 
     const useGetAllUserComments = () => {
         const [allComments, setAllComments] = useState([]);
 
+        const id = user['id'];
+
+        console.log(user['id']);
+
         const getAllUserComments = useCallback(async () => {
             
-                const url = `http://localhost:8080/comments/users/${userId}`;
+                const url = `http://localhost:8080/comments/users/${id}`;
 
                 const httpResponse = await fetch(url);
 
@@ -89,9 +93,15 @@ export default function AuctionCommentList() {
     const { allUserCommentsTable } = useGetAllUserComments();
 
     return (
-        <table className="table table-hover table-striped table-bordered">
-            <thead>
-                <tr>
+        <div className="container mt-5">
+            <div className="card">
+                <div className="card-header text-center fw-bold fs-3">
+                    Your Comments
+                </div>
+                <div className="card-body">
+                    <table  className="table table-striped table-sm">
+                        <thead className="table-dark">
+                        <tr>
                     <th>#</th>
                     <th>Commenter Id</th>
                     <th>Auction Id</th>
@@ -108,6 +118,9 @@ export default function AuctionCommentList() {
                     </tr>
                 )}
             </tbody>
-        </table>
+                    </table>
+                </div>
+            </div>
+        </div>
     );
 }
