@@ -1,25 +1,12 @@
 import { createContext, useState } from "react";
 
 
-export const AppContext = createContext();
+export const CommentContext = createContext();
 
-export default function AppProvider({children}){
-
-    const [ auctionId, setAuctionId ] = useState(1);
-
-    const [ userId, setUserId ] = useState(2);
-
-    const [ role, setRole ] = useState('client');
+export default function CommentProvider({children}){
 
     const [comments, setComments] = useState([]);
 
-    function updateAuctionId(newAId){
-        setAuctionId(newAId);
-    }
-
-    function updateUserId(newUId){
-        setUserId(newUId);
-    }
 
     function updateCommentsList(newComments) {
         // Only update if the new comments are different
@@ -28,25 +15,17 @@ export default function AppProvider({children}){
         }
     }
 
-    function updateRole(newRole) {
-        setRole(newRole);
-    }
+    
     
 
     const data ={
-        auctionId: auctionId,
-        setAuctionId: updateAuctionId,
-        userId: userId,
-        updateUserId: updateUserId,
         comments: comments,
-        updateCommentsList: updateCommentsList,
-        role: role,
-        updateRole: updateRole
+        updateCommentsList: updateCommentsList
     };
 
     return (
-        <AppContext.Provider value = {data}>
+        <CommentContext.Provider value = {data}>
             {children}
-        </AppContext.Provider>
+        </CommentContext.Provider>
     )
 }
