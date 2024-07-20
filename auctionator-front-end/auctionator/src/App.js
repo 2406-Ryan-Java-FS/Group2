@@ -15,48 +15,37 @@ import { ClientItemProvider } from './components/item-components/client-item-com
 import ClientItemView from './components/item-components/client-item-components/client-item-view';
 import { AdminItemProvider } from './components/item-components/admin-item-components/admin-item-context';
 import AdminItemView from './components/item-components/admin-item-components/admin-item-view';
-import UserProvider, { UserContext } from './UserContext';
+import { UserContext } from './UserContext';
 import AuctionTable from './components/auction-table';
 import CreateAuction from './components/create-auction';
 import UpdateAuctionAdmin from './components/update-auction-admin';
 import UpdateAuctionClient from './components/update-auction-client';
 import { useContext } from 'react';
+import AuctionCommentList from './components/auction-comment-list';
+// import UserCommentList from './components/user-comment-list';
+import NavBar from './components/navbar';
+import AuctionInfoComponent from './components/single-auction';
 
-function AuctionUpdate(props) {
-  const isAdmin = props.isAdmin;
-  return (
-    <>
-      { isAdmin ? <UpdateAuctionAdmin/> : <UpdateAuctionClient/> }
-    </>
-  );
-}
-
-function AuctionCreate(props) {
-  const isAdmin = props.isAdmin;
-  return (
-    <>
-      { isAdmin===true && <CreateAuction/>}
-    </>
-  );
-}
 
 function App() {
   const { user } = useContext(UserContext);
 
-  return (
+  return (<>
+
+    <NavBar />
+
     <Routes>
+
         <Route path='' element={<StartPage />} />
         <Route path='signup' element={<UserSignup />} />
         <Route path='login' element={<UserLogin />} />
-        <Route path='profile' element={<UserPage />} />
-        <Route path='userlist' element={<GetAllUsers />} />
-        <Route path='finduser' element={<GetUserById />} />
-        <Route path='setbalance' element={<UpdateUserBalance />} />
-        <Route path='setinfo' element={<UpdateUserInfo />} />
+        <Route path='userlist' element={<>
+          <GetAllUsers />
+          <UpdateUserBalance />
+          </>} />
         <Route path='profile' element={<UserProfile />} />
         <Route path='auction-table' element={<AuctionTable/>} />
         <Route path='create-auction' element={user['role']==="Admin" && <CreateAuction/>} />
-        <Route path='update-auction' element={user['role']==="Admin" ? <UpdateAuctionAdmin/> : <UpdateAuctionClient/>} />
         <Route path='client-item-view' element={
           <ClientItemProvider>
             <ClientItemView />
@@ -67,7 +56,10 @@ function App() {
             <AdminItemView />
           </AdminItemProvider>
         } />
+
+        <Route path='auction/:auctionId' element={<AuctionInfoComponent />} />
     </Routes>
+    </>
   );
 }
 

@@ -49,12 +49,29 @@ export default function CreateAuction() {
     }
 
     return (<>
-        <label htmlFor="item">Auction Item Id: </label>
-        <input type="number" id="item" ref={itemInput} min="1"/><br />
-        <label htmlFor="sb">Starting Bid: </label>
-        <input type="number" id="sb" ref={bidInput} min="1"/><br />
-        <label htmlFor="time">Time Limit: </label>
-        <input type="number" id="time" ref={timeInput} min="1"/><br />
-        <button onClick={listAuction}>List Auction</button>
+
+        <div className="container mt-5">                  
+            <div className="card">
+                <div className="card-header text-center fw-bold fs-3">
+                    List Auction
+                </div>
+                <div className="card-body">
+                    <div className="row">
+                        <div className="d-flex justify-content-between align-items-center col-12">
+                            <button className="btn btn-primary col-3" onClick={listAuction}>List Auction</button>
+                            <div className="ml-auto d-flex col-2">
+                                <input type="number" id="item" ref={itemInput} min="1" placeholder="Item ID for Auction" className="form-control"/>
+                            </div>
+                            <div className="ml-auto d-flex col-2">
+                                <input type="number" id="sb" ref={bidInput} min="1" placeholder="Starting Bid" className="form-control"/>
+                            </div>
+                            <div className="ml-auto d-flex col-2">
+                                <input type="number" id="time" ref={timeInput} min="1" placeholder="Duration (In Minutes)" className="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </>)
 }

@@ -1,10 +1,11 @@
 import { UserContext } from '../UserContext';
 import { useRef, useContext } from 'react';
+import {AuctionContext} from './AuctionContext'
 
 export default function UpdateAuctionAdmin(){
     
     const { user } = useContext(UserContext);
-    const idInput = useRef();
+    const { auctionId} = useContext(AuctionContext);
     const bidInput = useRef();
     const statusInput = useRef();
     const timeInput = useRef();
@@ -15,7 +16,7 @@ export default function UpdateAuctionAdmin(){
         } else if (bidInput.current.value <= 0) {
             alert("Bid cannot be negative.");
         } else {
-            const url = `http://localhost:8080/auctions/${idInput.current.value}/bid`;
+            const url = `http://localhost:8080/auctions/${auctionId}/bid`;
             const data = {
                 bid: bidInput.current.value,
                 bidder_id: user['id']
@@ -42,7 +43,7 @@ export default function UpdateAuctionAdmin(){
         if (statusInput.current.value === "") {
             alert("Field left blank.")
         } else {
-            const url = `http://localhost:8080/auctions/${idInput.current.value}/status`;
+            const url = `http://localhost:8080/auctions/${auctionId}/status`;
             const data = {
                 status: statusInput.current.value
             } 
@@ -70,7 +71,7 @@ export default function UpdateAuctionAdmin(){
         } else if (timeInput.current.value <= 0) {
             alert("Time cannot be negative.");
         } else {
-            const url = `http://localhost:8080/auctions/${idInput.current.value}/time`;
+            const url = `http://localhost:8080/auctions/${auctionId}/time`;
             const data = {
                 time: timeInput.current.value
             } 
@@ -93,19 +94,100 @@ export default function UpdateAuctionAdmin(){
     }
 
     return (<>
-        <label htmlFor="aid">Auction ID: </label>
-        <input type="number" id="aid" ref={idInput} min="0" /><br/>
 
-        <label htmlFor="bid">Bid Amount in Dollars: </label>
-        <input type="number" id="bid" ref={bidInput} min="0" /><br/>
-        <button onClick={placeBid}>Place Bid</button>
+        <div className="container mt-5">                  
+            <div className="card">
+                <div className="card-header text-center fw-bold fs-3">
+                    Place Bid
+                </div>
+                <div className="card-body">
+                    <div className="row">
+                        <div className="d-flex justify-content-between align-items-center col-12">
+                            <button className="btn btn-primary col-3" onClick={placeBid}>Place Bid</button>
+                            <div className="ml-auto d-flex col-4">
+                            <input type="number" id="bid" ref={bidInput} min="0" placeholder='Enter Bid Amount' className='form-control'/> 
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <label htmlFor="status">New Auction Status: </label>
-        <input type="text" id="status" ref={statusInput}/><br/>
-        <button onClick={updateStatus}>Update Status</button>
+        <div className="container mt-5">                  
+            <div className="card">
+                <div className="card-header text-center fw-bold fs-3">
+                    Update Auction Status
+                </div>
+                <div className="card-body">
+                    <div className="row">
+                        <div className="d-flex justify-content-between align-items-center col-12">
+                            <button className="btn btn-primary col-3" onClick={updateStatus}>Update Status</button>
+                            <div className="ml-auto d-flex col-4">
+                            <input type="number" id="bid" ref={statusInput} min="0" placeholder='Enter New Status' className='form-control'/> 
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <label htmlFor="time">New Remaining Time: </label>
-        <input type="number" id="time" ref={timeInput} min="0" /><br/>
-        <button onClick={updateTime}>Update Time</button>
+        <div className="container mt-5">                  
+            <div className="card">
+                <div className="card-header text-center fw-bold fs-3">
+                    Update Time Remaining
+                </div>
+                <div className="card-body">
+                    <div className="row">
+                        <div className="d-flex justify-content-between align-items-center col-12">
+                            <button className="btn btn-primary col-3" onClick={updateTime}>Update Time Remaining</button>
+                            <div className="ml-auto d-flex col-4">
+                                <input type="number" id="time" ref={timeInput} min="0" placeholder='Enter Time Remaining' className='form-control'/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {/* <div className="container mt-5">
+            <div className="card">
+                <div className="card-header text-center fw-bold fs-3">
+                    Update Auction Info
+                </div>
+                <div className="card-body">
+                    <table  className="table table-striped table-sm">
+                        <tbody>
+                            <tr scope="row" className='text-center'>
+                                <td>
+                                    <input type="number" id="bid" ref={bidInput} min="0" placeholder='Enter Bid Amount' className='input'/> 
+                                </td>
+                                <td>
+                                    <button onClick={placeBid} className='btn btn-outline-primary'>Place Bid</button>
+                                </td>
+                            </tr>
+                            <tr scope="row" className='text-center'>
+                                <td>
+                                    <input type="text" id="status" ref={statusInput} placeholder='Update Status'/>
+                                </td>
+                                <td>
+                                    <button onClick={updateStatus} className='btn btn-outline-primary'>Update Status</button>
+                                </td>
+                            </tr>
+                            <tr scope="row" className='text-center'>
+                                <td>
+                                    <input type="number" id="time" ref={timeInput} min="0" placeholder='Update Time'/>
+                                </td>
+                                <td>
+                                    <button onClick={updateTime} className='btn btn-outline-primary'>Update Time</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> */}
     </>)
 }

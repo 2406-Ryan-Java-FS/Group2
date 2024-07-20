@@ -11,20 +11,25 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "comments")
+@JsonPropertyOrder({"cId", "commenterId", "auctionId", "comment"})
 public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "c_id", updatable = false)
+    @JsonProperty(value = "cId")
     private int cId;
 
     @Column(name = "commenter_id")
+    @JsonProperty(value = "commenterId")
     private int commenterId;
 
     @Column(name = "auction_id")
+    @JsonProperty(value = "auctionId")
     private int auctionId;
 
     @Column(name = "comment")
+    @JsonProperty(value = "comment")
     private String comment;
 
     public Comment() {

@@ -41,11 +41,38 @@ export default function UserLogin() {
     }
     
     return (<>
-        <label htmlFor="un">Username: </label>
-        <input type="text" id="un" ref={usernameInput} /><br />
-        <label htmlFor="pw">Password: </label>
-        <input type="password" id="pw" ref={passwordInput} /><br />
-        <button onClick={signIn}>Log In</button>
-        
+
+        <div className="container mt-5">                  
+            <div className="card">
+                <div className="card-header text-center fw-bold fs-3">
+                    Login
+                </div>
+                <div className="card-body">
+                    <div className="row">
+                        <div className="d-flex justify-content-center align-items-center col-12">
+                            <div className="d-flex justify-content-center col-3">
+                                <input type="text" id="un" ref={usernameInput} className="form-control" placeholder="Username"/><br />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div className="row">
+                        <div className="d-flex justify-content-center align-items-center col-12">
+                            <div className="d-flex justify-content-center col-3">
+                                <input type="password" id="pw" ref={passwordInput} className="form-control" placeholder="Password"/><br />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div className="row">
+                        <div className="d-flex justify-content-center align-items-center col-12">
+                            <div className="d-flex justify-content-center col-3">
+                                <button onClick={signIn} className="btn btn-primary">Log In</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
     </>)
 }

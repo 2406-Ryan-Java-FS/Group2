@@ -13,10 +13,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class CommentController {
 
-    @Autowired
+
     CommentService cs;
+
+    @Autowired
+    public CommentController(CommentService cs){
+        this.cs = cs;
+    }
 
 
     /**

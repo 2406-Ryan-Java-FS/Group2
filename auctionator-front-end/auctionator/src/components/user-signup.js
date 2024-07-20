@@ -69,22 +69,73 @@ export default function UserSignup() {
     }
 
     return (<>
-        <label htmlFor="fn">First Name: </label>
-        <input type="text" id="fn" ref={firstNameInput} /><br />
-        <label htmlFor="ln">Last Name: </label>
-        <input type="text" id="ln" ref={lastNameInput} /><br />
-        <label htmlFor="un2">Username: </label>
-        <input type="text" id="un2" ref={newUsernameInput} /><br />
-        <label htmlFor="pw2">Password: </label>
-        <input type="password" id="pw2" ref={newPasswordInput} /><br />
-        <label htmlFor="bal">Balance: </label>
-        <input type="number" id="bal" ref={balanceInput} min="0" defaultValue="0" /><br />
-        <input type="radio" id="roleC" name="roleInput" value="Client"
-        checked={roleInput === "Client"} onChange={() => updateRole("Client")}/>
-        <label htmlFor="roleC">Client</label>
-        <input type="radio" id="roleA" name="roleInput" value="Admin"
-        checked={roleInput === "Admin"} onChange={() => updateRole("Admin")}/>
-        <label htmlFor="roleA">Admin</label><br />
-        <button onClick={signUp}>Sign Up</button>
+
+        <div className="container mt-5">                  
+            <div className="card">
+                <div className="card-header text-center fw-bold fs-3">
+                    Sign Up
+                </div>
+                <div className="card-body">
+                    <div className="row">
+                        <div className="d-flex justify-content-center align-items-center col-12">
+                            <div className="d-flex justify-content-center col-3">
+                                <input type="text" id="ln" ref={firstNameInput} className="form-control" placeholder="First Name"/>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div className="row">
+                        <div className="d-flex justify-content-center align-items-center col-12">
+                            <div className="d-flex justify-content-center col-3">
+                                <input type="text" id="ln" ref={lastNameInput} className="form-control" placeholder="Last Name"/>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div className="row">
+                        <div className="d-flex justify-content-center align-items-center col-12">
+                            <div className="d-flex justify-content-center col-3">
+                                <input type="text" id="un2" ref={newUsernameInput} className="form-control" placeholder="Username"/>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div className="row">
+                        <div className="d-flex justify-content-center align-items-center col-12">
+                            <div className="d-flex justify-content-center col-3">
+                                <input type="password" id="pw2" ref={newPasswordInput} className="form-control" placeholder="Password"/>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div className="row">
+                        <div className="d-flex justify-content-center align-items-center col-12">
+                            <div className="d-flex justify-content-center col-3">
+                                <input type="number" id="bal" ref={balanceInput} min="0" defaultValue="0" className="form-control" placeholder="Balance"/>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div className="row">
+                        <div className="d-flex justify-content-center align-items-center col-12">
+                            <div className="d-flex justify-content-center col-3">
+                                <input type="radio" id="roleC" name="roleInput" value="Client" checked={roleInput === "Client"} onChange={() => updateRole("Client")} className="form-check"/>
+                                <label htmlFor="roleC">Client</label>
+                                <input type="radio" id="roleA" name="roleInput" value="Admin" checked={roleInput === "Admin"} onChange={() => updateRole("Admin")} className="form-check"/>
+                                <label htmlFor="roleA">Admin</label><br />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div className="row">
+                        <div className="d-flex justify-content-center align-items-center col-12">
+                            <div className="d-flex justify-content-center col-3">
+                                <button onClick={signUp} className="btn btn-primary">Sign Up</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
     </>)
 }
