@@ -1,10 +1,11 @@
 import { UserContext } from '../UserContext';
 import { useRef, useContext } from 'react';
+import { AuctionContext } from './AuctionContext';
 
 export default function UpdateAuctionClient(){
     
     const { user } = useContext(UserContext);
-    const idInput = useRef();
+    const {auctionId} = useContext(AuctionContext)
     const bidInput = useRef();
 
     async function placeBid(){
@@ -13,7 +14,7 @@ export default function UpdateAuctionClient(){
         } else if (bidInput.current.value <= 0) {
             alert("Bid cannot be negative.");
         } else {
-            const url = `http://localhost:8080/auctions/${idInput.current.value}/bid`;
+            const url = `http://localhost:8080/auctions/${auctionId}/bid`;
             const data = {
                 bid: bidInput.current.value,
                 bidder_id: user['id']
@@ -37,11 +38,24 @@ export default function UpdateAuctionClient(){
     }
 
     return (<>
-        <label htmlFor="aid">Auction ID: </label>
-        <input type="number" id="aid" ref={idInput} min="0" /><br/>
 
-        <label htmlFor="bid">Bid Amount in Dollars: </label>
-        <input type="number" id="bid" ref={bidInput} min="0" /><br/>
-        <button onClick={placeBid}>Place Bid</button>
+        <div className="container mt-5">                  
+            <div className="card">
+                <div className="card-header text-center fw-bold fs-3">
+                    Place Bid
+                </div>
+                <div className="card-body">
+                    <div className="row">
+                        <div className="d-flex justify-content-between align-items-center col-12">
+                            <button className="btn btn-primary col-3" onClick={placeBid}>Place Bid</button>
+                            <div className="ml-auto d-flex col-4">
+                            <input type="number" id="bid" ref={bidInput} min="0" placeholder='Enter Bid Amount' className='form-control'/> 
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </>)
 }
