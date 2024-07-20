@@ -1,12 +1,16 @@
 import {  useEffect, useCallback, useState, useContext } from 'react';
-import { AppContext } from '../CommentContext';
 import CommentEditableCell from './comment-editable-cell';
+import { UserContext } from '../UserContext';
+import { AuctionContext } from './AuctionContext';
+import CreateComment from './create-comment';
 
 export default function AuctionCommentList() {
 
-    const { auctionId, userId, role } = useContext(AppContext);
+    const { user } = useContext(UserContext);
 
-    console.log("role: " + role + "  userId: " + userId);
+    console.log("role: " + user['role'] + "  userId: " + user['id']);
+
+    const { auctionId }  = useContext(AuctionContext);
 
     const useGetAllAuctionComments = () => {
         const [allComments, setAllComments] = useState([]);
@@ -72,21 +76,8 @@ export default function AuctionCommentList() {
                 <th scope="row">{index + 1}</th>
                 <td>{c.commenterId}</td>
                 <td>{c.auctionId}</td>
-                {/* <td>
-                        <CommentEditableCell
-                            value={c.comment}
-                            onChange={newValue => handleCellChange(c.cId, newValue)}
-                            onEnter={() => patchChanges(c.cId)}
-                        />
-                </td>
                 <td>
-                    
-                        <button onClick={() => deleteComment(c.cId)} className="btn btn-danger">Delete</button>
-                    
-                </td> */}
-                
-                <td>
-                    {(role === 'admin' || (role === 'client' && c.commenterId === userId)) ? (
+                    {(user['role'] === 'Admin' || (user['role'] === 'Client' && c.commenterId === user['id'])) ? (
                         <CommentEditableCell
                             value={c.comment}
                             onChange={newValue => handleCellChange(c.cId, newValue)}
@@ -97,7 +88,7 @@ export default function AuctionCommentList() {
                     )}
                 </td>
                 <td>
-                    {(role === 'admin' || (role === 'client' && c.commenterId === userId)) ? (
+                    {(user['role'] === 'Admin' || (user['role'] === 'Client' && c.commenterId === user['id'])) ? (
                         <button onClick={() => deleteComment(c.cId)} className="btn btn-danger">Delete</button>
                     ) : <p></p>}
                 </td>
@@ -110,9 +101,15 @@ export default function AuctionCommentList() {
     const { allAuctionCommentsTable } = useGetAllAuctionComments();
 
     return (
-        <table className="table table-hover table-striped table-bordered">
-            <thead>
-                <tr>
+        <div className="container mt-5">
+            <div className="card">
+                <div className="card-header text-center fw-bold fs-3">
+                    Your Comments
+                </div>
+                <div className="card-body">
+                    <table  className="table table-striped table-sm">
+                        <thead className="table-dark">
+                        <tr>
                     <th>#</th>
                     <th>Commenter Id</th>
                     <th>Auction Id</th>
@@ -129,6 +126,10 @@ export default function AuctionCommentList() {
                     </tr>
                 )}
             </tbody>
-        </table>
+                    </table>
+                    <CreateComment />
+                </div>
+            </div>
+        </div>
     );
 }
