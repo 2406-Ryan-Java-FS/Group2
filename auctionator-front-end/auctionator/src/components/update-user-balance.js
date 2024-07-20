@@ -37,10 +37,36 @@ export default function UpdateUserBalance() {
     }
 
     return (<>
-        <label htmlFor="uid">User ID: </label>
-        <input type="number" id="uid" ref={idInput} min="0" /><br/>
-        <label htmlFor="newbal">New balance: </label>
-        <input type="number" id="newBal" ref={newBalanceInput} min="0" /><br/>
-        <button onClick={updateBalance}>Update Balance</button>
+        <div className="container mt-5">                  
+            <div className="card">
+                <div className="card-header text-center fw-bold fs-3">
+                    Update User Balance
+                </div>
+                <div className="card-body">
+                    <div className="row">
+                        <div className="d-flex justify-content-between align-items-center col-12">
+                            <button className="btn btn-primary col-3" onClick={updateBalance}>Update Balance</button>
+                            <div className="ml-auto d-flex col-3">
+                                <input
+                                    type="number"
+                                    id="itemNameInput"
+                                    placeholder="Input the user's ID"
+                                    className="form-control"
+                                    ref={idInput}
+                                />
+                            </div>
+                            <div className="ml-auto d-flex col-3">
+                                <input
+                                    type="number"
+                                    id="newBalanceInput"
+                                    placeholder="Input the new balance amount"
+                                    className="form-control"
+                                    ref={newBalanceInput}/>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </>)
 }
