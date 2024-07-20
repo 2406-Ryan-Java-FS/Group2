@@ -1,16 +1,19 @@
 import { useContext, useRef } from "react";
-import { AppContext } from "../CommentContext";
+import { CommentContext } from "../CommentContext";
+import { UserContext } from "../UserContext";
+import { AuctionContext } from "./AuctionContext";
 
 export default function CreateComment() {
-    const { comments, updateCommentsList } = useContext(AppContext);
+    const { comments, updateCommentsList } = useContext(CommentContext);
+    const {user} = useContext(UserContext);
+    const {auctionId} = useContext(AuctionContext);
 
-    const commenterId = useRef();
-    const auctionId = useRef();
+    
     const comment = useRef();
 
     async function createComment() {
         // Check if refs are not null before accessing their values
-        if (!commenterId.current || !auctionId.current || !comment.current) {
+        if (!user['id'] || !auctionId || !comment.current) {
             console.error("One or more input fields are not initialized");
             return;
         }
@@ -18,8 +21,8 @@ export default function CreateComment() {
         const url = "http://localhost:8080/comments";
 
         const commentObj = {
-            commenterId: commenterId.current.value,
-            auctionId: auctionId.current.value,
+            commenterId: user['id'],
+            auctionId: auctionId,
             comment: comment.current.value
         };
 
@@ -39,25 +42,30 @@ export default function CreateComment() {
         }
     }
 
-    return (
-        <>
-            <form className="form-group">
-                <div className="row">
-                    <div className="col">
-                        <input type="number" ref={commenterId} className="form-control" placeholder="Commenter Id here"/>
-                    </div>
-                    <div className="col">
-                        <input type="number" ref={auctionId} className="form-control" placeholder="Auction Id here"/>
-                    </div>
-                    <div className="col">
-                        <input type="text" ref={comment} className="form-control" placeholder="Comment Text here"/>
-                    </div>
-                    <div className="col">
-                        <button onClick={createComment} className="btn btn-outline-primary">Submit</button>
+    return (<>
+
+
+        <div className="container mt-5">                  
+            <div className="card">
+                <div className="card-header text-center fw-bold fs-3">
+                    Add New Comment
+                </div>
+                <div className="card-body">
+                    <div className="row">
+                        <div className="d-flex justify-content-between align-items-center col-12">
+                            <button className="btn btn-primary col-3" onClick={createComment}>Add Comment</button>
+                            <div className="ml-auto d-flex col-4">
+                                <input type="text" id="commentText" ref={comment} min="0" placeholder='Comment text here' className='form-control'/>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </form> 
+            </div>
+        </div>
+
+
         </>
     );
+
 
 }
