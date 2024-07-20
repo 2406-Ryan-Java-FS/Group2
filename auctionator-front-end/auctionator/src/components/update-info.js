@@ -59,14 +59,36 @@ export default function UpdateUserInfo() {
     }
 
     return(<>
-        <label htmlFor="fnNew">First Name: </label>
-        <input type="text" id="fnNew" ref={newFirstNameInput} /><br />
-        <label htmlFor="lnNew">Last Name: </label>
-        <input type="text" id="lnNew" ref={newLastNameInput} /><br />
-        <label htmlFor="unNew">Username: </label>
-        <input type="text" id="unNew" ref={newUsernameInput2} /><br />
-        <label htmlFor="pwNew">Password: </label>
-        <input type="password" id="pwNew" ref={newPasswordInput2} /><br />
-        <button onClick={updateInfo}>Update</button>
+        <div className="container mt-5">
+            <div className="card">
+                <div className="card-header text-center fw-bold fs-3">
+                    Update User Info
+                </div>
+                <div className="card-body">
+                    <table  className="table table-striped table-sm">
+                        <tbody>
+                            <tr scope="row" className='text-center'>
+                                <td>
+                                    <input type="text" id="fnNew" ref={newFirstNameInput} placeholder="First Name"/>
+                                </td>
+                                <td>
+                                    <input type="text" id="lnNew" ref={newLastNameInput} placeholder="Last Name"/>
+                                </td>
+                                <td>
+                                    <input type="text" id="unNew" ref={newUsernameInput2} placeholder="Username"/>
+                                </td>
+                                <td>
+                                    <input type="password" id="pwNew" ref={newPasswordInput2} placeholder="Password"/>
+                                </td>
+                                <td>
+                                    <button onClick={updateInfo} className="btn btn-outline-primary">Update</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </>)
 }
