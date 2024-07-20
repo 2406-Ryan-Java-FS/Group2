@@ -30,21 +30,30 @@ export default function GetAllUsers() {
     }, []);
 
     return(<>
-        <br/>
-        <table style={{border: "1px solid black"}} className={styles.userTable}>
-            <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
-                    <th>Password</th>
-                    <th>Balance</th>
-                    <th>Role</th>
-                </tr>
-            </thead>
-            <tbody>
-                {userTableRows}
-            </tbody>
-        </table>
+
+        <div className="container mt-5">
+            <div className="card">
+                <div className="card-header text-center fw-bold fs-3">
+                    Users
+                </div>
+                <div className="card-body">
+                    <table  className="table table-striped table-sm">
+                        <thead className="table-dark">
+                            <tr scope="row" className="text-center">
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>Balance</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                         <tbody scope="row" className="text-center">
+                            {userTableRows}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </>)
 }
