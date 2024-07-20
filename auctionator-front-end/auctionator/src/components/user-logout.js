@@ -11,6 +11,6 @@ export default function UserLogout() {
     }
 
     return (<>
-        <button onClick={logOut}>Log Out</button>
+        <button onClick={logOut} className="btn btn-outline-danger">Log Out</button>
     </>)
 }
