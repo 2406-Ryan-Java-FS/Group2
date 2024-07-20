@@ -1,11 +1,13 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { UserContext } from '../../../UserContext';
 
-// Create a context to hold our admin item data and functions
+// Create a context to hold our client item data and functions
 export const ClientItemContext = createContext();
 
 export function ClientItemProvider({ children }) {
-    const { userItems, getItemsByUsername, setUserItems } = useGetItemsByUsername();
-    
+    const { user } = useContext(UserContext);
+    const { userItems, getItemsByUsername, setUserItems } = useGetItemsByUsername(user?.username);
+
     const data = {
         userItems,
         addNewItem: (username, itemName) => addNewItem(username, itemName, getItemsByUsername),
@@ -22,29 +24,23 @@ export function ClientItemProvider({ children }) {
 }
 
 // Custom hook to fetch all items and user info
-function useGetItemsByUsername() {
-    // hardcoded username
-    const username = "johndamme";
-
-    // the default state for userItems is a blank array
+function useGetItemsByUsername(username) {
     const [userItems, setUserItems] = useState([]);
 
-    // Function to fetch all items and user info from the backend
-    async function getItemsByUsername() {
+    const getItemsByUsername = useCallback(async () => {
+        if (!username) return;
         console.log(`Fetching ${username}'s items`);
         const url = `http://localhost:8080/${username}/items`;
         const httpResponse = await fetch(url);
         const theUserItems = await httpResponse.json();
         console.log(theUserItems);
         setUserItems(theUserItems);
-    }
+    }, [username]);
 
-    // Fetch items and user info when the component mounts
     useEffect(() => {
         getItemsByUsername();
-    }, []);
+    }, [username, getItemsByUsername]);
 
-    // export the objects and data that other functions may need
     return { userItems, getItemsByUsername, setUserItems };
 }
 
