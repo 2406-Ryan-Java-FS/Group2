@@ -10,8 +10,8 @@ adjust the active status and remaining time on said auctions.
 # Technologies/How to Run
 
 Auctionator runs on a Spring 3 backend coded in Java, using Spring Boot, Spring Web, Spring Data JPA, and Dev Tools.
-For the database, we used a postgreSQL database. 
-The repositories send SQL syntax to the database configured in the application.properties file - you will
+For the database, we used postgreSQL for our Relational Database Management System.
+The repository layer sends SQL syntax to the database configured in the application.properties file - you will
 need to have a database ready to host and configure the url and credentials in that file accordingly. Afterwards, there are 2 sql scripts provided in the sql-scripts folder
 that will create the necessary tables in the database to persist data and another that inserts initial values into each table.
 
@@ -21,7 +21,7 @@ on port 8080.
 
 The frontend uses React components written in Javascript. To initialize the frontend, open the auctionator-front-end
 folder in VSCode and open a terminal in auctionator-front-end/auctionator. You'll need Node.js installed on your machine;
-first use `npm init -y` to initialize the project, then `npm install` to install the Node modules folder, run `npm install react-router-dom` to install this dependency, 
+first use `npm init -y` to initialize the project, then `npm install` to install the Node modules folder, next run `npm install react-router-dom` to install this dependency for React, 
 and then `npm start` to run the app. It will run on port 3000, and should open the login page in your default browser when it runs.
 
 # Continuing Development
